@@ -7,8 +7,6 @@ import Link from "next/link"
 const UpdateProductPage = ({ params }: { params: { productId: string } }) => {
   const { productId } = use(params)
 
-
-
   return (
     <div className="container mx-auto p-4 max-w-xl mt-40">
       <h1 className="text-2xl font-semibold">Update Product {productId}</h1>
