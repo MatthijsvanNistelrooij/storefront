@@ -3,7 +3,6 @@ import { useEffect, useState } from "react"
 import { GraphQLClient } from "graphql-request"
 import Image from "next/image"
 import Link from "next/link"
-import UpdateProductForm from "@/components/UpdateProductForm"
 
 interface Product {
   id: string
