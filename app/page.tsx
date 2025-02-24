@@ -71,9 +71,7 @@ const Home = () => {
               </p>
 
               <button
-                onClick={() =>
-                  addToCart(product.id, 1, product.variants[0].id)
-                }
+                onClick={() => addToCart(product.id, 1, product.variants[0].id)}
                 className="mt-4 px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600"
               >
                 🛒 Add to Cart
@@ -85,13 +83,6 @@ const Home = () => {
                 className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
               >
                 View in Webshop
-              </Link>
-              <Link
-                href={`update/${product.id.split("/").pop()}`}
-                passHref
-                className="mt-4 px-4 py-2 bg-orange-500 text-white rounded-md hover:bg-orange-600"
-              >
-                UPDATE PRODUCT
               </Link>
             </div>
           ))
