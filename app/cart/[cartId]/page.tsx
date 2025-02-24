@@ -59,9 +59,11 @@ const Cart = () => {
                     min="1"
                     value={item.quantity}
                     onChange={(e) =>
-                      updateQuantity(item.id, parseInt(e.target.value))
+                      updateQuantity(item.id, parseInt(e.target.value) || 1)
                     }
                     className="w-16 p-1 border rounded bg-gray-800"
+                    pattern="[0-9]*"
+                    inputMode="numeric"
                   />
                 </div>
               </div>
