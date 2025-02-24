@@ -92,7 +92,7 @@ const Cart = () => {
 
       <Link
         href={cart.checkoutUrl}
-        className="px-6 py-2 bg-black text-white rounded-lg hover:bg-gray-800 text-center"
+        className="px-6 py-2 bg-black text-white rounded-lg hover:bg-gray-800 text-center border border-white"
       >
         Go to Checkout
       </Link>
