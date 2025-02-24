@@ -55,7 +55,7 @@ const Cart = () => {
               <div className="ml-4 flex-1">
                 <p className="text-sm font-medium">{item.title}</p>
                 <p className="text-gray-400 text-sm">
-                  {item.price} {item.currencyCode}
+                  € {parseFloat(item.price).toFixed(2)} {item.currencyCode}
                 </p>
                 <div className="flex items-center gap-2 mt-2">
                   <button
@@ -87,7 +87,7 @@ const Cart = () => {
       )}
 
       <div className="p-4 flex justify-between text-lg font-semibold">
-        TOTAL <span>€{cart.totalAmount}</span>
+        TOTAL <span>€{parseFloat(cart.totalAmount).toFixed(2)}</span>
       </div>
 
       <Link

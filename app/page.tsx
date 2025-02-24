@@ -52,8 +52,8 @@ const Home = () => {
               <Image
                 src={product.imageSrc}
                 alt={product.imageAlt}
-                width={"100"}
-                height={"100"}
+                width={100}
+                height={100}
                 className="rounded-md"
                 priority
               />
