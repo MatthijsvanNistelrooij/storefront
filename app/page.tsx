@@ -59,7 +59,7 @@ const Home = () => {
               />
               <h2 className="text-xl font-semibold mt-4">{product.title}</h2>
               <p className="text-gray-600">
-                {product.price} {product.currencyCode}
+                {parseFloat(product.price).toFixed(2)} {product.currencyCode}
               </p>
 
               <button
