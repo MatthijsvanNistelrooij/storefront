@@ -2,46 +2,71 @@
 import React, { useEffect, useState } from "react"
 import Image from "next/image"
 import {
-  addToCart,
+  Collection,
+  fetchCollection,
+  fetchCollections,
   fetchProducts,
   fetchShopInfo,
-  Product,
 } from "@/lib/commerce"
 import Link from "next/link"
 
+interface Product {
+  id: string
+  title: string
+  handle: string
+  imageSrc: string
+  imageAlt: string
+  price: string
+  currencyCode: string
+}
+
 const Home = () => {
   const [products, setProducts] = useState<Product[]>([])
+  const [collections, setCollections] = useState<Collection[]>([])
+  const [collection, setCollection] = useState<Collection[]>([])
+
+  console.log("collections", collections)
+  console.log("collection", collection)
+
   const [shop, setShop] = useState<null | {
     name: string
     description: string
+    moneyFormat?: string
     primaryDomain: { url: string } | null
   }>(null)
 
   useEffect(() => {
     fetchShopInfo().then(setShop)
+  }, [])
+
+  useEffect(() => {
+    console.log("🔄 Running useEffect...")
     fetchProducts().then(setProducts)
   }, [])
 
-  console.log("products", products)
+  useEffect(() => {
+    fetchCollections().then((collection) => {
+      console.log("Collections:", collection)
+      fetchProducts().then(setCollections)
+    })
+  }, [])
 
-  const getCartId = () => localStorage.getItem("shopifyCartId")
-  const cartId = getCartId()
-  const extractedCartId = cartId?.split("/").pop()
+  useEffect(() => {
+    fetchCollection("Home Page").then((collection) => {
+      console.log("Collection:", collection)
+      fetchProducts().then(setCollection)
+    })
+  }, [])
 
-  console.log("products", products)
   return (
     <div className="p-8">
-      <Link href={`/cart/${extractedCartId}`}>Cart</Link>
+      <Link href={"/"}>Home</Link>
       <div>
         {shop ? (
           <>
-            <h1>name: {shop.name}</h1>
-            <p>descr: {shop.description ? shop.description : "empty"} </p>
-            <Link
-              className="text-blue-300 text-sm"
-              href={shop?.primaryDomain?.url || "/"}
-              target="_blank"
-            >
+            <h1>{shop.name}</h1>
+            <p>{shop.description}</p>
+            <Link href={shop?.primaryDomain?.url || "/"} target="_blank">
               Visit Store
             </Link>
           </>
@@ -60,24 +85,14 @@ const Home = () => {
               <Image
                 src={product.imageSrc}
                 alt={product.imageAlt}
-                width={"100"}
-                height={"100"}
+                width={200}
+                height={200}
                 className="rounded-md"
-                priority
               />
               <h2 className="text-xl font-semibold mt-4">{product.title}</h2>
               <p className="text-gray-600">
                 {product.price} {product.currencyCode}
               </p>
-
-              <button
-                onClick={() =>
-                  addToCart(product.id, 1, product.variants[0].id)
-                }
-                className="mt-4 px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600"
-              >
-                🛒 Add to Cart
-              </button>
 
               <Link
                 href={`https://${process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN}/products/${product.handle}`}
