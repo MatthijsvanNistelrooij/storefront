@@ -24,7 +24,7 @@ const Home = () => {
 
   console.log("products", products)
 
-  const getCartId = () => localStorage.getItem("shopifyCartId")
+  const getCartId = () => localStorage?.getItem("shopifyCartId")
   const cartId = getCartId()
   const extractedCartId = cartId?.split("/").pop()
 
