@@ -39,7 +39,7 @@ const Cart = () => {
           {cart.items.map((item) => (
             <div
               key={item.id}
-              className="border border-gray-400 p-2 flex items-center justify-between m-2"
+              className="border border-gray-500 p-2 flex items-center justify-between mb-4"
             >
               <Image
                 src={item.imageSrc}
