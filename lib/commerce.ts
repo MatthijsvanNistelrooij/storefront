@@ -178,86 +178,6 @@ export interface Cart {
   items: CartItem[]
 }
 
-export const cartCreateMutation = `
-  mutation {
-    cartCreate {
-      cart {
-        id
-      }
-    }
-  }
-`
-
-export const cartLinesAddMutation = `
-  mutation cartLinesAdd($cartId: ID!, $lines: [CartLineInput!]!) {
-    cartLinesAdd(cartId: $cartId, lines: $lines) {
-      cart {
-        id
-        lines(first: 5) {
-          edges {
-            node {
-              id
-              quantity
-              merchandise {
-                ... on ProductVariant {
-                  id
-                  title
-                  product {
-                    title
-                  }
-                  priceV2 {
-                    amount
-                    currencyCode
-                  }
-                  image {
-                    url
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-      userErrors {
-        field
-        message
-      }
-      warnings {
-        # CartWarning fields
-      }
-    }
-  }
-`
-
-export const createAndAddToCart = async () => {
-  try {
-    let cartId =
-      typeof window !== "undefined"
-        ? localStorage.getItem("shopifyCartId")
-        : null
-
-    if (!cartId) {
-      console.log("🛒 No cart found in localStorage, creating a new one...")
-
-      const cartCreateResponse = await client.request(cartCreateMutation)
-      cartId = cartCreateResponse.data.cartCreate.cart.id
-
-      if (cartId) {
-        if (typeof window !== "undefined") {
-          localStorage.setItem("shopifyCartId", cartId)
-        }
-      } else {
-        console.error("Failed to create a cart. No cartId received.")
-      }
-      console.log("🛒 Found cart in localStorage:", cartId)
-    }
-  } catch (error) {
-    console.error("Error adding product to cart:", error)
-  }
-}
-
-createAndAddToCart()
-
 const shopifyClient = new GraphQLClient(
   `https://${process.env
     .NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN!}/api/2025-01/graphql.json`,
@@ -431,31 +351,6 @@ export const fetchCart = async (cartId: string): Promise<Cart | null> => {
   }
 }
 
-export const updateProduct = async (
-  productId: string,
-  updatedData: { title: string; price: string }
-) => {
-  try {
-    const response = await fetch("/api/updateProduct", {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ productId, updatedData }),
-    })
-
-    const data = await response.json()
-
-    if (response.ok) {
-      console.log("Product updated:", data)
-    } else {
-      console.error("Failed to update product:", data)
-    }
-  } catch (error) {
-    console.error("Error:", error)
-  }
-}
-
 export const addToCart = async (
   productId: string,
   quantity: number,
@@ -492,7 +387,7 @@ export const addToCart = async (
     console.error("❌ Invalid cartId or productId")
     return
   }
-
+ ////
   const cartLinesAddMutation = `
   mutation cartLinesAdd($cartId: ID!, $lines: [CartLineInput!]!) {
     cartLinesAdd(cartId: $cartId, lines: $lines) {
