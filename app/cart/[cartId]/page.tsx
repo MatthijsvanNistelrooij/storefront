@@ -1,66 +1,18 @@
 "use client"
-import React, { useEffect, useState } from "react"
-
-// Interfaces
-interface CartItem {
-  id: string
-  quantity: number
-  title: string
-  variantId: string
-  price: string
-  currencyCode: string
-  imageSrc: string
-}
-
-interface Cart {
-  id: string
-  totalQuantity: number
-  checkoutUrl: string
-  totalAmount: string
-  currencyCode: string
-  items: CartItem[]
-}
-
+import React from "react"
 import Image from "next/image"
 import Link from "next/link"
-import {
-  createCart,
-  fetchCart,
-  getCartId,
-  updateCartLine,
-  removeCartLine,
-} from "@/lib/commerce"
+import { useCart } from "@/context/CartContext"
+import { fetchCart, removeCartLine, updateCartLine } from "@/lib/commerce"
 
 const Cart = () => {
-  const [cart, setCart] = useState<Cart | null>(null)
-  const [loading, setLoading] = useState(true)
-
-  useEffect(() => {
-    const loadCart = async () => {
-      const cartId = getCartId()
-      let cartData = null
-
-      if (cartId) {
-        cartData = await fetchCart(cartId)
-      }
-
-      if (!cartData) {
-        cartData = await createCart()
-      }
-
-      setCart(cartData)
-      setLoading(false)
-    }
-
-    loadCart()
-  }, [])
+  const { cart, setCart } = useCart()
 
   const updateQuantity = async (lineId: string, quantity: number) => {
-    const updatedCart = await updateCartLine(cart?.id, lineId, quantity)
-
+    if (!cart) return
+    const updatedCart = await updateCartLine(cart.id, lineId, quantity)
     if (updatedCart) {
-      // After updating the cart line, refetch the cart to get the latest state
-      const updatedCartData = await fetchCart(cart?.id || "")
+      const updatedCartData = await fetchCart(cart.id || "")
       setCart(updatedCartData)
     } else {
       console.error("Failed to update cart")
@@ -70,30 +22,24 @@ const Cart = () => {
   const deleteItem = async (cartId: string, lineId: string) => {
     try {
       await removeCartLine(cartId, lineId)
-
       const updatedCart = await fetchCart(cartId)
-
       setCart(updatedCart)
     } catch (error) {
       console.error("Error removing item:", error)
     }
   }
 
-  if (loading) return <p>Loading cart...</p>
   if (!cart) return <p>Cart not found.</p>
 
   return (
-    <div className="p-5">
-      <Link href={"/"} className="block p-5">
-        Home
-      </Link>
+    <div className="p-10 flex flex-col gap-5">
       <h2 className="text-xl">Your Cart ({cart.totalQuantity} items)</h2>
       {cart.items?.length > 0 ? (
         <div>
           {cart.items.map((item) => (
             <div
               key={item.id}
-              className="m-5 border p-2 flex items-center justify-between"
+              className="border border-gray-400 p-2 flex items-center justify-between m-2"
             >
               <Image
                 src={item.imageSrc}
@@ -115,7 +61,7 @@ const Cart = () => {
                     onChange={(e) =>
                       updateQuantity(item.id, parseInt(e.target.value))
                     }
-                    className="w-16 p-1 border rounded text-gray-500"
+                    className="w-16 p-1 border rounded bg-gray-800"
                   />
                 </div>
               </div>
@@ -127,18 +73,23 @@ const Cart = () => {
               </button>
             </div>
           ))}
-          <p>TOTAAL: E {cart.totalAmount}</p>
         </div>
       ) : (
         <p>🛒 Your cart is empty.</p>
       )}
 
-      <a
-        href={cart.checkoutUrl}
-        className="inline-block mt-4 px-6 py-2 bg-black text-white rounded-lg hover:bg-gray-800"
-      >
-        Go to Checkout
-      </a>
+      <div className="flex flex-col gap-2">
+        <div className="flex p-4 justify-end">
+          TOTAAL <span className="mx-2">€</span> {cart.totalAmount}
+        </div>
+
+        <Link
+          href={cart.checkoutUrl}
+          className="block mt-4 px-6 py-2 bg-black text-white rounded-lg hover:bg-gray-800 text-center"
+        >
+          Go to Checkout
+        </Link>
+      </div>
     </div>
   )
 }

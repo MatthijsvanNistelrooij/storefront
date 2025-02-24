@@ -11,13 +11,6 @@ import Link from "next/link"
 
 const Home = () => {
   const [products, setProducts] = useState<Product[]>([])
-  const [cartId, setCartId] = useState<string | null>(null)
-
-  useEffect(() => {
-    // Only run this code on the client
-    const storedCartId = localStorage.getItem("shopifyCartId")
-    setCartId(storedCartId)
-  }, [])
 
   const [shop, setShop] = useState<null | {
     name: string
@@ -30,16 +23,12 @@ const Home = () => {
     fetchProducts().then(setProducts)
   }, [])
 
-  const extractedCartId = cartId?.split("/").pop()
-
   return (
     <div className="p-8">
-      <Link href={`/cart/${extractedCartId}`}>Cart</Link>
       <div>
         {shop ? (
-          <>
-            <h1>name: {shop.name}</h1>
-            <p>descr: {shop.description ? shop.description : "empty"} </p>
+          <div className="flex flex-col text-center mb-10">
+            <h1 className="text-4xl">{shop.name}</h1>
             <Link
               className="text-blue-300 text-sm"
               href={shop?.primaryDomain?.url || "/"}
@@ -47,7 +36,7 @@ const Home = () => {
             >
               Visit Store
             </Link>
-          </>
+          </div>
         ) : (
           <p>Loading store info...</p>
         )}

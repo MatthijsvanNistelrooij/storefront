@@ -241,7 +241,6 @@ export const createAndAddToCart = async () => {
 
       const cartCreateResponse = await client.request(cartCreateMutation)
       cartId = cartCreateResponse.data.cartCreate.cart.id
-      console.log({ cartId })
 
       if (cartId) {
         if (typeof window !== "undefined") {
@@ -462,15 +461,11 @@ export const addToCart = async (
   quantity: number,
   variantId: string
 ) => {
-  console.log("ADD TO CART, Product ID:", productId)
-
   if (!productId) {
     console.error("❌ No product ID available")
     return
   }
   let cartId = localStorage.getItem("shopifyCartId")
-
-  console.log("cartId", cartId)
 
   if (!cartId) {
     console.log("🛒 No cart found, creating a new one...")
@@ -492,9 +487,6 @@ export const addToCart = async (
   const cartUrl = cleanCartId.split("/Cart")[1]
 
   const cleanProductId = productId.split("/") || ""
-
-  console.log("Clean Cart ID:", cleanCartId)
-  console.log("cartUrl", cartUrl)
 
   if (!cleanCartId || !cleanProductId) {
     console.error("❌ Invalid cartId or productId")
@@ -556,13 +548,10 @@ export const addToCart = async (
   }
 
   try {
-    console.log("variables", variables)
-    const response = await client.request(cartLinesAddMutation, options)
 
+    const response = await client.request(cartLinesAddMutation, options)
     console.log("✅ Added to cart:", response)
 
-    console.log(`Added Product to cart!`)
-    console.log("Clean cart ID", `${cleanCartId}`)
     window.location.href = `/cart${cartUrl}`
   } catch (error) {
     console.error("❌ Error adding product to cart:", error)
