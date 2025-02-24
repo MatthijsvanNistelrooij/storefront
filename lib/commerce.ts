@@ -387,7 +387,7 @@ export const addToCart = async (
     console.error("❌ Invalid cartId or productId")
     return
   }
- ////
+
   const cartLinesAddMutation = `
   mutation cartLinesAdd($cartId: ID!, $lines: [CartLineInput!]!) {
     cartLinesAdd(cartId: $cartId, lines: $lines) {
