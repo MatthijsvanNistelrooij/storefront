@@ -30,7 +30,7 @@ const Home = () => {
           <div className="flex flex-col text-center mb-10">
             <h1 className="text-4xl">{shop.name}</h1>
             <Link
-              className="text-blue-300 text-sm"
+              className="text-blue-300 text-sm inline-block mx-auto"
               href={shop?.primaryDomain?.url || "/"}
               target="_blank"
             >

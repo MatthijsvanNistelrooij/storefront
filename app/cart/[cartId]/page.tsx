@@ -33,7 +33,7 @@ const Cart = () => {
   if (!cart) return <p>Cart not found.</p>
 
   return (
-    <div className="p-5 flex flex-col gap-5 max-w-md mx-auto">
+    <div className="p-5 flex flex-col gap-5 max-w-lg mx-auto">
       <h2 className="text-xl font-semibold">
         Your Cart ({cart.totalQuantity} items)
       </h2>
@@ -92,7 +92,7 @@ const Cart = () => {
 
       <Link
         href={cart.checkoutUrl}
-        className="px-6 py-2 bg-black text-white rounded-lg hover:bg-gray-800 text-center border border-white"
+        className="px-6 py-2 bg-black text-white rounded-lg hover:bg-gray-800 text-center border border-gray-700"
       >
         Go to Checkout
       </Link>
