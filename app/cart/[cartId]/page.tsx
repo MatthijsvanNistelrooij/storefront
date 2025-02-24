@@ -4,12 +4,13 @@ import Image from "next/image"
 import Link from "next/link"
 import { useCart } from "@/context/CartContext"
 import { fetchCart, removeCartLine, updateCartLine } from "@/lib/commerce"
+import { Trash2, Minus, Plus } from "lucide-react"
 
 const Cart = () => {
   const { cart, setCart } = useCart()
 
   const updateQuantity = async (lineId: string, quantity: number) => {
-    if (!cart) return
+    if (!cart || quantity < 1) return
     const updatedCart = await updateCartLine(cart.id, lineId, quantity)
     if (updatedCart) {
       const updatedCartData = await fetchCart(cart.id || "")
@@ -32,66 +33,69 @@ const Cart = () => {
   if (!cart) return <p>Cart not found.</p>
 
   return (
-    <div className="p-10 flex flex-col gap-5">
-      <h2 className="text-xl">Your Cart ({cart.totalQuantity} items)</h2>
+    <div className="p-5 flex flex-col gap-5 max-w-md mx-auto">
+      <h2 className="text-xl font-semibold">
+        Your Cart ({cart.totalQuantity} items)
+      </h2>
+
       {cart.items?.length > 0 ? (
-        <div>
+        <div className="flex flex-col gap-4">
           {cart.items.map((item) => (
             <div
               key={item.id}
-              className="border border-gray-500 p-2 flex items-center justify-between mb-4"
+              className="border border-gray-500 p-3 flex items-center justify-between rounded-md"
             >
               <Image
                 src={item.imageSrc}
                 alt={item.title}
                 width={50}
                 height={50}
+                className="rounded"
               />
-              <div className="ml-4">
-                <p>{item.title}</p>
-                <p>
+              <div className="ml-4 flex-1">
+                <p className="text-sm font-medium">{item.title}</p>
+                <p className="text-gray-400 text-sm">
                   {item.price} {item.currencyCode}
                 </p>
-                <div className="flex items-center gap-2">
-                  <p>Quantity: </p>
-                  <input
-                    type="number"
-                    min="1"
-                    value={item.quantity}
-                    onChange={(e) =>
-                      updateQuantity(item.id, parseInt(e.target.value) || 1)
-                    }
-                    className="w-16 p-1 border rounded bg-gray-800"
-                    pattern="[0-9]*"
-                    inputMode="numeric"
-                  />
+                <div className="flex items-center gap-2 mt-2">
+                  <button
+                    onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                    className="p-1 bg-gray-700 text-white rounded"
+                  >
+                    <Minus className="w-4 h-4" />
+                  </button>
+                  <p className="w-6 text-center">{item.quantity}</p>
+                  <button
+                    onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                    className="p-1 bg-gray-700 text-white rounded"
+                  >
+                    <Plus className="w-4 h-4" />
+                  </button>
                 </div>
               </div>
               <button
                 onClick={() => deleteItem(cart.id, item.id)}
-                className="text-red-500 hover:text-red-700 mt-2"
+                className="text-red-500 hover:text-red-700"
               >
-                Remove
+                <Trash2 className="w-5 h-5" />
               </button>
             </div>
           ))}
         </div>
       ) : (
-        <p>🛒 Your cart is empty.</p>
+        <p className="text-center text-gray-500">🛒 Your cart is empty.</p>
       )}
 
-      <div className="flex flex-col gap-2">
-        <div className="flex p-4 justify-end">
-          TOTAAL <span className="mx-2">€</span> {cart.totalAmount}
-        </div>
-
-        <Link
-          href={cart.checkoutUrl}
-          className="block mt-4 px-6 py-2 bg-black text-white rounded-lg hover:bg-gray-800 text-center"
-        >
-          Go to Checkout
-        </Link>
+      <div className="p-4 flex justify-between text-lg font-semibold">
+        TOTAL <span>€{cart.totalAmount}</span>
       </div>
+
+      <Link
+        href={cart.checkoutUrl}
+        className="px-6 py-2 bg-black text-white rounded-lg hover:bg-gray-800 text-center"
+      >
+        Go to Checkout
+      </Link>
     </div>
   )
 }
