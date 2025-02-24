@@ -87,7 +87,7 @@ const Cart = () => {
       )}
 
       <div className="p-4 flex justify-between text-lg font-semibold">
-        TOTAL <span>€{parseFloat(cart.totalAmount).toFixed(2)}</span>
+        TOTAL <span>€ {parseFloat(cart.totalAmount).toFixed(2)}</span>
       </div>
 
       <Link
