@@ -4,6 +4,7 @@ import { z } from "zod"
 const productSchema = z.object({
   id: z.string(),
   title: z.string(),
+  description: z.string().nullable().optional(),
   handle: z.string(),
   images: z.object({
     nodes: z
@@ -33,6 +34,10 @@ const productSchema = z.object({
 })
 
 const collectionSchema = z.object({
+  id: z.string(),
+  title: z.string(),
+  description: z.string().nullable().optional(),
+  handle: z.string(),
   products: z.object({
     nodes: z.array(productSchema),
   }),
@@ -41,6 +46,10 @@ const collectionSchema = z.object({
 const collectionQuery = `
   query getCollection($handle: String!) {
     collection(handle: $handle) {
+      id
+      title
+      description
+      handle
       products(first: 10) {
         nodes {
           id
@@ -72,7 +81,7 @@ export type Collection = z.infer<typeof collectionSchema>
 
 export const getCollection = async (
   handle: string
-): Promise<Product[] | null> => {
+): Promise<Collection | null> => {
   try {
     const response = await client.fetch(collectionQuery, {
       variables: { handle },
@@ -91,7 +100,7 @@ export const getCollection = async (
       return null
     }
 
-    return parsedData.data.products.nodes
+    return parsedData.data
   } catch (error) {
     console.error("Error fetching collection:", error)
     return null

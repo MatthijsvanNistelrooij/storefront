@@ -4,6 +4,7 @@ import { z } from "zod"
 const productSchema = z.object({
   id: z.string(),
   title: z.string(),
+  description: z.string().nullable().optional(),
   handle: z.string(),
   images: z.object({
     nodes: z
@@ -35,6 +36,7 @@ const productSchema = z.object({
 const collectionSchema = z.object({
   id: z.string(),
   title: z.string(),
+  description: z.string().nullable().optional(),
   handle: z.string(),
   products: z.object({
     nodes: z.array(productSchema),
@@ -53,6 +55,7 @@ const collectionsQuery = `
       nodes {
         id
         title
+        description
         handle
         products(first: 10) {
           nodes {

@@ -30,7 +30,7 @@ const ShopInfo = () => {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center h-40 text-center">
+    <div className="flex flex-col text-center h-32">
       <h1 className="text-4xl font-bold">{shopInfo.name}</h1>
       <Link
         target="_blank"
