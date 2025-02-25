@@ -1,27 +1,23 @@
 "use client"
 import { useCart } from "@/context/CartContext"
 import Link from "next/link"
-import React, { useEffect, useState } from "react"
 
 const Navbar = () => {
-  const { totalQuantity } = useCart()
-  const [cartId, setCartId] = useState<string | null>(null)
+  const { totalQuantity, cart } = useCart()
 
-  useEffect(() => {
-    const storedCartId = localStorage.getItem("shopifyCartId")
-    setCartId(storedCartId)
-  }, [])
-
-  const extractedCartId = cartId?.split("/").pop()
+  const extractedCartId = cart?.id?.split("/").pop()
 
   return (
-    <div className="flex justify-between p-5 bg-slate-700 sticky top-0">
-      <Link href={"/"} className="block border p-2">
-        Home <span className="text-xs text-gray-400">v1.3</span>
+    <div className="flex justify-between p-5 bg-gray-800 sticky top-0">
+      <Link
+        href={"/"}
+        className="block border border-slate-400 p-2 hover:border-slate-100"
+      >
+        Home <span className="text-xs text-gray-400">v1.5</span>
       </Link>
       <Link
         href={`/cart/${extractedCartId}`}
-        className="block border p-2 text-white"
+        className="block border border-slate-400 p-2 text-white hover:border-slate-100"
       >
         🛒 ({totalQuantity})
       </Link>
