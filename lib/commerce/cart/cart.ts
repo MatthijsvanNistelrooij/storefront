@@ -95,8 +95,6 @@ export const getCart = async (cartId: string): Promise<Cart | null> => {
       variables: { cartId },
     })
 
-    console.log("response 33", response)
-
     if (!response.ok) {
       console.error("Failed to fetch cart", response.status)
       return null
