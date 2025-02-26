@@ -102,7 +102,7 @@ const Cart = () => {
                       >
                         <Minus className="w-4 h-4" />
                       </button>
-                      <p className="px-2 min-w-10 text-center">{quantity}</p>
+                      <p className="px-2 min-w-8 text-center">{quantity}</p>
                       <button
                         onClick={() => updateQuantity(lineId, quantity + 1)}
                         className="p-1 bg-gray-700 text-white rounded hover:bg-gray-800"
