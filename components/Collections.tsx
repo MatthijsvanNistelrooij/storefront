@@ -28,7 +28,7 @@ const Collections = () => {
       <div className="flex flex-col h-20 text-center">
         <h1 className="text-4xl font-bold">Collections</h1>
       </div>
-      <div className="space-y-12">
+      <div className="space-y-12 mb-40">
         {collections.length > 0 ? (
           collections.map((collection) => (
             <section key={collection.id} className="space-y-4">
