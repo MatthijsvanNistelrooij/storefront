@@ -2,28 +2,28 @@ import { client } from "../client/client"
 import { z } from "zod"
 
 const shopInfoSchema = z.object({
+  id: z.string(),
   name: z.string(),
-  description: z.string().nullable(),
-  url: z.string(),
-  moneyFormat: z.string(),
+  description: z.string().nullable().optional(),
+  primaryDomain: z.object({
+    url: z.string(),
+  }),
 })
 
 const shopInfoQuery = `
-  query getShopInfo {
-    shop {
-      name
-      description
-      primaryDomain {
-        url
-      }
-      moneyFormat
+query getShopInfo {
+  shop {
+    id
+    name
+    primaryDomain {
+      url
     }
   }
+}
 `
+export type MyShopInfo = z.infer<typeof shopInfoSchema>
 
-export type ShopInfo = z.infer<typeof shopInfoSchema>
-
-export const getShopInfo = async (): Promise<ShopInfo | null> => {
+export const getShopInfo = async (): Promise<MyShopInfo | null> => {
   try {
     const response = await client.fetch(shopInfoQuery)
 

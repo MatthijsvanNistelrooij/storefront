@@ -1,14 +1,9 @@
-import { getShopInfo } from "@/lib/commerce/shop/shop"
+import { getShopInfo, MyShopInfo } from "@/lib/commerce/shop/shop"
 import Link from "next/link"
 import React, { useEffect, useState } from "react"
 
 const ShopInfo = () => {
-  const [shopInfo, setShopInfo] = useState<{
-    name: string
-    description: string | null
-    url: string
-  } | null>(null)
-
+  const [shopInfo, setShopInfo] = useState<MyShopInfo | null>(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -30,12 +25,15 @@ const ShopInfo = () => {
   }
 
   return (
-    <div className="flex flex-col text-center h-32">
+    <div className="flex flex-col items-center text-center h-32">
       <h1 className="text-4xl font-bold">{shopInfo.name}</h1>
+      {shopInfo.description && (
+        <p className="mt-4 text-lg text-gray-600">{shopInfo.description}</p>
+      )}
       <Link
         target="_blank"
         rel="noreferrer"
-        href={shopInfo.url || ""}
+        href={shopInfo.primaryDomain.url || ""}
         className="mt-2 text-blue-500 hover:text-blue-300"
       >
         Visit our shop
