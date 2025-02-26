@@ -25,7 +25,7 @@ const Collections = () => {
 
   return (
     <>
-      <div className="flex flex-col h-20 text-center">
+      <div className="flex flex-col h-20 text-center mt-10">
         <h1 className="text-4xl font-bold">Collections</h1>
       </div>
       <div className="space-y-12 mb-40">

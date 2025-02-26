@@ -25,7 +25,7 @@ const ShopInfo = () => {
   }
 
   return (
-    <div className="flex flex-col items-center text-center h-32">
+    <div className="flex flex-col items-center text-center h-32 mt-10">
       <h1 className="text-4xl font-bold">{shopInfo.name}</h1>
       {shopInfo.description && (
         <p className="mt-4 text-lg text-gray-600">{shopInfo.description}</p>
