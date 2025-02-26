@@ -7,6 +7,7 @@ import {
 import ProductCard from "@/components/ProductCard"
 import Link from "next/link"
 import { useEffect, useState } from "react"
+import { ArrowRightIcon, ArrowRightSquare } from "lucide-react"
 
 const Collections = () => {
   const [collections, setCollections] = useState<Collection[]>([])
@@ -37,9 +38,10 @@ const Collections = () => {
               <h1 className="text-center text-sm">
                 <Link
                   href={`/collection/${collection.handle}`}
-                  className="text-gray-400 hover:text-gray-200"
+                  className="text-gray-400 hover:text-gray-200 inline-flex items-center space-x-1"
                 >
-                  {collection?.description}
+                  <span>{collection?.description}</span>
+                  <ArrowRightIcon className="w-4 h-4" />
                 </Link>
               </h1>
 
