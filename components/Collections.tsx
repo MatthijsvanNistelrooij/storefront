@@ -7,7 +7,7 @@ import {
 import ProductCard from "@/components/ProductCard"
 import Link from "next/link"
 import { useEffect, useState } from "react"
-import { ArrowRightIcon, ArrowRightSquare } from "lucide-react"
+import { ArrowRightIcon } from "lucide-react"
 
 const Collections = () => {
   const [collections, setCollections] = useState<Collection[]>([])
