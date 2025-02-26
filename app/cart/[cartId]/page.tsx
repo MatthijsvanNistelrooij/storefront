@@ -158,7 +158,7 @@ const Cart = () => {
         </div>
 
         <div className="min-w-[300px] p-5 border border-gray-500 rounded-md shadow-lg">
-          <h3 className="text-xl font-semibold mb-4">Order Summary</h3>
+          <h3 className="text-xl font-semibold mb-4">Summary</h3>
           <div className="flex justify-between text-lg font-light mb-2">
             <p className="text-sm font-light">Products ({cart.totalQuantity})</p>
             <p className="text-sm font-light">{totalPrice}</p>
