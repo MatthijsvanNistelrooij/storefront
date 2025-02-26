@@ -14,7 +14,7 @@ const Navbar = () => {
           href={"/"}
           className="block border rounded border-slate-400 p-2 hover:border-slate-100"
         >
-          Home <span className="text-xs text-gray-400">v1.5</span>
+          Home <span className="text-xs text-gray-400">v2</span>
         </Link>
         <Link
           href={"/collections"}
