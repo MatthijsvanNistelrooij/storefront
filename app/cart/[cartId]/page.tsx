@@ -147,12 +147,14 @@ const Cart = () => {
               <p className="text-center text-gray-500 mt-20">
                 🛒 Your cart is empty.
               </p>
-              <Link
-                href={"/"}
-                className="text-center border border-gray-700 p-2 hover:bg-gray-800 mt-20"
-              >
-                Continue shopping
-              </Link>
+              <div className="flex justify-center">
+                <Link
+                  href={"/"}
+                  className="inline-block justify-center text-center w-56 border border-gray-700 p-2 hover:bg-gray-800 mt-10"
+                >
+                  Continue shopping
+                </Link>
+              </div>
             </>
           )}
         </div>
@@ -160,7 +162,9 @@ const Cart = () => {
         <div className="min-w-[300px] p-5 border border-gray-500 rounded-md shadow-lg">
           <h3 className="text-xl font-semibold mb-4">Summary</h3>
           <div className="flex justify-between text-lg font-light mb-2">
-            <p className="text-sm font-light">Products ({cart.totalQuantity})</p>
+            <p className="text-sm font-light">
+              Products ({cart.totalQuantity})
+            </p>
             <p className="text-sm font-light">{totalPrice}</p>
           </div>
           <div className="flex justify-between text-lg font-medium mb-2">
