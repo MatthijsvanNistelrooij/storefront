@@ -8,17 +8,17 @@ const Navbar = () => {
   const extractedCartId = cart?.id?.split("/").pop()
 
   return (
-    <div className="flex justify-between p-5 bg-gray-800 sticky top-0">
-      <div className="flex gap-2">
+    <div className="flex justify-between items-center p-4 bg-gray-900 text-gray-200 sticky top-0 border-b border-gray-700 shadow-lg">
+      <div className="flex gap-4">
         <Link
           href={"/"}
-          className="block border rounded border-slate-500 p-2 hover:border-slate-400"
+          className="px-4 py-2 rounded-md border border-gray-700 hover:bg-gray-800 transition-all"
         >
           Home
         </Link>
         <Link
           href={"/collections"}
-          className="block border rounded border-slate-500 p-2 hover:border-slate-400"
+          className="px-4 py-2 rounded-md border border-gray-700 hover:bg-gray-800 transition-all"
         >
           Collections
         </Link>
@@ -26,9 +26,9 @@ const Navbar = () => {
 
       <Link
         href={`/cart/${extractedCartId}`}
-        className="block border rounded border-slate-500 p-2 text-white hover:border-slate-400"
+        className="flex items-center gap-2 px-4 py-2 rounded-md border border-gray-700 hover:bg-gray-800 transition-all"
       >
-        🛒 ({totalQuantity})
+        🛒 <span>({totalQuantity})</span>
       </Link>
     </div>
   )
