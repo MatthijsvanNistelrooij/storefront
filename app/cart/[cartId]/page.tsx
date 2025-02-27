@@ -172,18 +172,19 @@ const Cart = () => {
             <p className="text-sm font-light">EUR 0.00</p>
           </div>
           <div className="border-t border-gray-300 my-4" />
-
           <div className="flex justify-between text-xl font-semibold p-2">
             <span>Total</span>
             <span>{totalPrice}</span>
           </div>
 
-          <Link
-            href={cart.checkoutUrl}
-            className="mt-28 block w-full border border-gray-700 px-6 py-2 bg-black text-white rounded-lg hover:bg-gray-800 text-center"
-          >
-            Go to Checkout
-          </Link>
+          {cart.totalQuantity > 0 && (
+            <Link
+              href={cart.checkoutUrl}
+              className="mt-28 block w-full border border-gray-700 px-6 py-2 bg-black text-white rounded-lg hover:bg-gray-800 text-center"
+            >
+              Go to Checkout
+            </Link>
+          )}
         </div>
       </div>
     </div>
