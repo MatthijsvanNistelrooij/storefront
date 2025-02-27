@@ -159,7 +159,7 @@ const Cart = () => {
           )}
         </div>
         {cart.totalQuantity > 0 && (
-          <div className="min-w-[300px] p-5 border border-gray-500 rounded-md shadow-lg">
+          <div className="min-w-[300px] p-5 border border-gray-500 rounded-md shadow-lg h-[380px] overflow-y-auto">
             <h3 className="text-xl font-semibold mb-4">Summary</h3>
             <div className="flex justify-between text-lg font-light mb-2">
               <p className="text-sm font-light">

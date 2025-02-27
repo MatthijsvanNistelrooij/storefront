@@ -74,8 +74,10 @@ const ProductDetails = () => {
 
       <div className="flex flex-col justify-between">
         <div>
-          <h1 className="text-2xl font-bold mb-4">{product.title}</h1>
-
+          <h1 className="text-2xl font-bold mb-1">{product.title}</h1>
+          <h1 className="text-sm font-light mb-4 text-gray-600">
+            {product.description}
+          </h1>
           <p className="text-lg mb-6">
             {formatPrice(
               product.variants.nodes[0]?.price.amount,

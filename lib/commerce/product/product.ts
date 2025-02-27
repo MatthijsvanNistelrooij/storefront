@@ -4,6 +4,7 @@ import { z } from "zod"
 const productSchema = z.object({
   id: z.string(),
   title: z.string(),
+  description: z.string(),
   handle: z.string(),
   images: z.object({
     nodes: z
@@ -41,6 +42,7 @@ const productQuery = `
     product(handle: $handle) {
       id
       title
+      description
       handle
       images(first: 1) {
         nodes {
