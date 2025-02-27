@@ -15,6 +15,7 @@ query getShopInfo {
   shop {
     id
     name
+    description
     primaryDomain {
       url
     }
