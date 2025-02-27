@@ -27,7 +27,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
   return (
     <div
       key={id}
-      className="border border-gray-500 rounded-lg shadow-lg p-6 flex flex-col items-center hover:bg-gray-900"
+      className="border border-gray-700 rounded-lg shadow-lg p-6 flex flex-col items-center hover:bg-gray-900"
     >
       <Image
         src={imageSrc}
