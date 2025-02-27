@@ -1,69 +1,55 @@
+import { client } from "../client/client"
 
-export const removeCartLine = async (
-    cartId: string | undefined,
-    lineId: string
-  ) => {
-    const query = `
-      mutation removeCartLine($cartId: ID!, $lineId: ID!) {
-        cartLinesRemove(cartId: $cartId, lineIds: [$lineId]) {
-          cart {
-            id
-            lines(first: 10) {
-              edges {
-                node {
-                  id
-                  quantity
-                  merchandise {
-                    __typename
-                    ... on ProductVariant {
-                      id
+export const removeCartLine = async (cartId: string, lineId: string) => {
+  if (!cartId) {
+    console.error("Cart ID is required but received undefined")
+    return null
+  }
+
+  const query = `
+    mutation removeCartLine($cartId: ID!, $lineIds: [ID!]!) {
+      cartLinesRemove(cartId: $cartId, lineIds: $lineIds) {
+        cart {
+          id
+          lines(first: 10) {
+            edges {
+              node {
+                id
+                quantity
+                merchandise {
+                  __typename
+                  ... on ProductVariant {
+                    id
+                    title
+                    product {
                       title
-                      product {
-                        title
-                        handle
-                      }
+                      handle
                     }
                   }
                 }
               }
             }
           }
-          userErrors {
-            field
-            message
-          }
+        }
+        userErrors {
+          field
+          message
+        }
+        warnings {
+          message
         }
       }
-    `
-  
-    const variables = {
-      cartId,
-      lineId,
     }
-  
-    const response = await fetch(
-      `https://${process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN}/api/2025-01/graphql.json`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "X-Shopify-Storefront-Access-Token":
-            process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_ACCESS_TOKEN!,
-        },
-        body: JSON.stringify({
-          query,
-          variables,
-        }),
-      }
-    )
-  
-    const data = await response.json()
-  
-    if (data.errors) {
-      console.error("Error removing cart line:", data.errors)
-      return null
-    }
-  
-    return data.data.cartLinesRemove.cart
+  `
+
+  const variables = { cartId, lineIds: [lineId] }
+
+  try {
+    const response = await client.request(query, { variables })
+
+    return response?.data.cartLinesRemove?.cart
+  } catch (error) {
+    console.error("Error removing cart line:", error)
+    return null
   }
-  
+}
