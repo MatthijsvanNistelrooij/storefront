@@ -9,7 +9,7 @@ const Navbar = () => {
 
   return (
     <div className="flex justify-between items-center p-4 bg-gray-900 text-gray-200 sticky top-0 border-b border-gray-700 shadow-lg">
-      <div className="flex gap-4">
+      <div className="flex gap-2">
         <Link
           href={"/"}
           className="px-4 py-2 rounded-md border border-gray-700 hover:bg-gray-800 transition-all"
