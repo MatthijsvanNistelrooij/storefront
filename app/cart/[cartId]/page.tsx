@@ -158,34 +158,33 @@ const Cart = () => {
             </>
           )}
         </div>
+        {cart.totalQuantity > 0 && (
+          <div className="min-w-[300px] p-5 border border-gray-500 rounded-md shadow-lg">
+            <h3 className="text-xl font-semibold mb-4">Summary</h3>
+            <div className="flex justify-between text-lg font-light mb-2">
+              <p className="text-sm font-light">
+                Products ({cart.totalQuantity})
+              </p>
+              <p className="text-sm font-light">{totalPrice}</p>
+            </div>
+            <div className="flex justify-between text-lg font-medium mb-2">
+              <p className="text-sm font-light">Shipping</p>
+              <p className="text-sm font-light">EUR 0.00</p>
+            </div>
+            <div className="border-t border-gray-300 my-4" />
+            <div className="flex justify-between text-xl font-semibold p-2">
+              <span>Total</span>
+              <span>{totalPrice}</span>
+            </div>
 
-        <div className="min-w-[300px] p-5 border border-gray-500 rounded-md shadow-lg">
-          <h3 className="text-xl font-semibold mb-4">Summary</h3>
-          <div className="flex justify-between text-lg font-light mb-2">
-            <p className="text-sm font-light">
-              Products ({cart.totalQuantity})
-            </p>
-            <p className="text-sm font-light">{totalPrice}</p>
-          </div>
-          <div className="flex justify-between text-lg font-medium mb-2">
-            <p className="text-sm font-light">Shipping</p>
-            <p className="text-sm font-light">EUR 0.00</p>
-          </div>
-          <div className="border-t border-gray-300 my-4" />
-          <div className="flex justify-between text-xl font-semibold p-2">
-            <span>Total</span>
-            <span>{totalPrice}</span>
-          </div>
-
-          {cart.totalQuantity > 0 && (
             <Link
               href={cart.checkoutUrl}
               className="mt-28 block w-full border border-gray-700 px-6 py-2 bg-black text-white rounded-lg hover:bg-gray-800 text-center"
             >
               Go to Checkout
             </Link>
-          )}
-        </div>
+          </div>
+        )}
       </div>
     </div>
   )
