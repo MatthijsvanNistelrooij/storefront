@@ -48,6 +48,7 @@ export const getShopInfo = async (): Promise<MyShopInfo | null> => {
     }
 
     return parsedData.data
+    
   } catch (error) {
     console.error("Error fetching shop info:", error)
     return null
